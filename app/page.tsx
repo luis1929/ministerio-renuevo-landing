@@ -1,8 +1,8 @@
 import { supabase } from '@/lib/supabase';
 import type { BlogPost } from '@/lib/supabase';
+
 import Header from '@/components/Header';
 import HeroCarousel from '@/components/HeroCarousel';
-import RadioSection from '@/components/RadioSection';
 import RegistrationSection from '@/components/RegistrationSection';
 import VirtualMeetings from '@/components/VirtualMeetings';
 import BlogSection from '@/components/BlogSection';
@@ -16,10 +16,13 @@ async function getBlogPosts(): Promise<BlogPost[]> {
     .from('blog_posts')
     .select('*')
     .eq('publicado', true)
-    .order('created_at', { ascending: false })
+    .order('created_at', {
+      ascending: false,
+    })
     .limit(6);
 
   if (error) return [];
+
   return data as BlogPost[];
 }
 
@@ -29,11 +32,8 @@ export default async function Home() {
   return (
     <main className="min-h-screen bg-[hsl(220,35%,6%)]">
       <Header />
+
       <HeroCarousel />
-
-      <div className="section-divider" />
-
-      <RadioSection />
 
       <div className="section-divider" />
 

@@ -35,3 +35,15 @@ yarn-error.log*
 *.tsbuildinfo
 next-env.d.ts
 .env*
+
+# IA / Ollama / OpenWebUI
+open-webui-data/
+*.sqlite
+*.db
+
+# logs
+logs/
+*.log
+
+# Linux
+*.swp
