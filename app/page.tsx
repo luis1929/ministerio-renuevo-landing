@@ -3,13 +3,13 @@ import type { BlogPost } from '@/lib/supabase';
 
 import Header from '@/components/Header';
 import HeroCarousel from '@/components/HeroCarousel';
-import RegistrationSection from '@/components/RegistrationSection';
 import VirtualMeetings from '@/components/VirtualMeetings';
 import BlogSection from '@/components/BlogSection';
 import DonationsSection from '@/components/DonationsSection';
 import SocialSection from '@/components/SocialSection';
 import SocialHub from '@/components/SocialHub';
 import Footer from '@/components/Footer';
+import AIChatWidget from '@/components/AIChatWidget'; // 👈 Agregado
 
 async function getBlogPosts(): Promise<BlogPost[]> {
   const { data, error } = await supabase
@@ -43,12 +43,6 @@ export default async function Home() {
 
       <BlogSection posts={blogPosts} />
 
-      <div className="section-divider" />
-
-      <RegistrationSection />
-
-      <div className="section-divider" />
-
       <DonationsSection />
 
       <div className="section-divider" />
@@ -60,6 +54,9 @@ export default async function Home() {
       <SocialHub />
 
       <Footer />
+
+      {/* 👇 Widget de Chat IA Flotante */}
+      <AIChatWidget />
     </main>
   );
 }
