@@ -1,21 +1,15 @@
-import { createServerClient } from '@supabase/ssr';
-import { cookies } from 'next/headers';
+// lib/supabase.ts
+import { createClient } from '@supabase/supabase-js'
 
-export async function createAuthenticatedSupabaseClient() {
-  const cookieStore = await cookies();
+const supabaseUrl = process.env.NEXT_PUBLIC_SUPABASE_URL
+const supabaseAnonKey = process.env.NEXT_PUBLIC_SUPABASE_ANON_KEY
 
-  return createServerClient(
-    process.env.NEXT_PUBLIC_SUPABASE_URL!,
-    process.env.NEXT_PUBLIC_SUPABASE_ANON_KEY!,
-    {
-      cookies: {
-        getAll: () => cookieStore.getAll(),
-        setAll: (cookiesToSet) => {
-          cookiesToSet.forEach(({ name, value, options }) => {
-            cookieStore.set(name, value, options);
-          });
-        },
-      },
-    },
-  );
+if (!supabaseUrl || !supabaseAnonKey) {
+  throw new Error('Faltan variables de entorno de Supabase')
 }
+
+// ✅ Exporta 'supabase' como named export (lo que espera page.tsx)
+export const supabase = createClient(supabaseUrl, supabaseAnonKey)
+
+// ✅ También exporta tipos si los necesitas
+export type { BlogPost } from '@/types/supabase' // Ajusta la ruta si es necesario
