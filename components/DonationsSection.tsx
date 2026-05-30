@@ -1,126 +1,136 @@
 'use client';
 
+import { useState } from 'react';
 import { motion } from 'framer-motion';
-import { Heart, CreditCard, Smartphone, Globe, Shield, ArrowRight } from 'lucide-react';
+import { Copy, Check, CreditCard, DollarSign, Building, Smartphone, Globe } from 'lucide-react';
 
-const methods = [
+// Datos reales extraídos de tu imagen
+const donationMethods = [
   {
-    icon: CreditCard,
-    title: 'Transferencia Bancaria',
-    desc: 'Banco: Ejemplo\nCuenta: XXXX-XXXX',
-    bg: 'bg-blue-500/15',
-    color: 'text-blue-400',
-    border: 'border-blue-500/20',
+    name: 'Zelle',
+    icon: <ZelleIcon className="w-8 h-8" />,
+    value: 'M.Elrenuevo@gmail.com',
+    color: 'bg-purple-900/30 border-purple-500/30 text-purple-300',
+    iconColor: 'text-purple-500'
   },
   {
-    icon: Smartphone,
-    title: 'Nequi / Daviplata',
-    desc: 'Cel: +57 XXX XXX XXXX\nA nombre del ministerio',
-    bg: 'bg-pink-500/15',
-    color: 'text-pink-400',
-    border: 'border-pink-500/20',
+    name: 'PayPal',
+    icon: <DollarSign className="w-8 h-8 text-blue-500" />,
+    value: 'M.Elrenuevo@gmail.com',
+    color: 'bg-blue-900/30 border-blue-500/30 text-blue-300',
+    iconColor: 'text-blue-500'
   },
   {
-    icon: Globe,
-    title: 'PayPal Internacional',
-    desc: 'Para ofrendas desde el exterior',
-    bg: 'bg-sky-500/15',
-    color: 'text-sky-400',
-    border: 'border-sky-500/20',
+    name: 'Cash App',
+    icon: <DollarSign className="w-8 h-8 text-green-500" />,
+    value: '$Ministerioelrenuevo',
+    color: 'bg-green-900/30 border-green-500/30 text-green-300',
+    iconColor: 'text-green-500'
   },
+  {
+    name: 'Bancolombia',
+    icon: <Building className="w-8 h-8 text-yellow-500" />,
+    value: '487-0000-144-26',
+    color: 'bg-yellow-900/30 border-yellow-500/30 text-yellow-300',
+    iconColor: 'text-yellow-500'
+  },
+  {
+    name: 'Square',
+    icon: <CreditCard className="w-8 h-8 text-white" />,
+    value: '(Pastor Haim)',
+    color: 'bg-gray-800/50 border-gray-600/30 text-gray-300',
+    iconColor: 'text-white'
+  }
 ];
 
-export default function DonationsSection() {
+function ZelleIcon({ className }: { className?: string }) {
   return (
-    <section id="donaciones" className="py-24 px-4 sm:px-6 lg:px-8 relative overflow-hidden">
-      {/* Gold glow */}
-      <div className="absolute bottom-0 left-1/2 -translate-x-1/2 w-[600px] h-64 bg-gold/4 rounded-full blur-3xl pointer-events-none" />
+    <svg className={className} viewBox="0 0 24 24" fill="currentColor">
+      <path d="M12.5 2C6.5 2 2 6.5 2 12.5S6.5 23 12.5 23 23 18.5 23 12.5 18.5 2 12.5 2zm3.5 13h-5l3.5-4-3.5-4h5l-3.5 4 3.5 4z" />
+    </svg>
+  );
+}
 
+export default function DonationsSection() {
+  const [copiedId, setCopiedId] = useState<string | null>(null);
+
+  const handleCopy = (text: string, id: string) => {
+    navigator.clipboard.writeText(text);
+    setCopiedId(id);
+    setTimeout(() => setCopiedId(null), 2000);
+  };
+
+  return (
+    <section id="donaciones" className="py-24 px-4 sm:px-6 lg:px-8 bg-[hsl(220,35%,6%)]">
       <div className="max-w-7xl mx-auto">
+        {/* Header */}
         <motion.div
           initial={{ opacity: 0, y: 20 }}
           whileInView={{ opacity: 1, y: 0 }}
           viewport={{ once: true }}
           className="text-center mb-16"
         >
-          <span className="text-gold text-sm font-semibold uppercase tracking-widest">Ofrendas</span>
+          <span className="text-gold text-sm font-semibold uppercase tracking-widest">Generosidad</span>
           <h2 className="text-4xl sm:text-5xl font-bold text-white mt-2 mb-4">
-            Apoya el Ministerio
+            Diezmos, Ofrendas y Primicias
           </h2>
           <div className="section-divider max-w-xs mx-auto mb-6" />
-          <p className="text-[hsl(45,60%,75%)] text-lg max-w-2xl mx-auto">
-            Tu ofrenda hace posible que el mensaje de salvación llegue a más corazones.
-            Cada semilla siembra esperanza.
+          <p className="text-[hsl(45,60%,75%)] text-lg max-w-3xl mx-auto font-serif italic">
+            "Honra a Jehová con tus bienes, Y con las primicias de todos tus frutos; 
+            Y serán llenos tus graneros con abundancia, Y tus lagares rebosarán de mosto."
           </p>
+          <p className="text-gold font-bold mt-2">— PROVERBIOS 3:9-10 —</p>
         </motion.div>
 
-        {/* Scripture */}
-        <motion.blockquote
-          initial={{ opacity: 0, y: 20 }}
-          whileInView={{ opacity: 1, y: 0 }}
-          viewport={{ once: true }}
-          className="text-center mb-16 max-w-xl mx-auto"
-        >
-          <p className="text-[hsl(45,70%,80%)] text-xl italic leading-relaxed">
-            "El que siembra escasamente, también segará escasamente; pero el que siembra generosamente, también segará generosamente."
-          </p>
-          <cite className="text-gold text-sm mt-3 block not-italic font-semibold">
-            — 2 Corintios 9:6
-          </cite>
-        </motion.blockquote>
-
-        {/* Methods */}
-        <div className="grid grid-cols-1 md:grid-cols-3 gap-6 mb-16">
-          {methods.map((m, i) => (
+        {/* Grid de Métodos de Pago */}
+        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6 max-w-5xl mx-auto">
+          {donationMethods.map((method, index) => (
             <motion.div
-              key={i}
-              initial={{ opacity: 0, y: 30 }}
+              key={method.name}
+              initial={{ opacity: 0, y: 20 }}
               whileInView={{ opacity: 1, y: 0 }}
               viewport={{ once: true }}
-              transition={{ delay: i * 0.12 }}
-              className={`glass-card rounded-2xl p-6 border ${m.border} hover:scale-105 transition-transform duration-300`}
+              transition={{ delay: index * 0.1 }}
+              className={`p-6 rounded-xl border backdrop-blur-sm flex flex-col justify-between h-full group hover:scale-[1.02] transition-transform duration-300 ${method.color}`}
             >
-              <div className={`w-12 h-12 ${m.bg} rounded-xl flex items-center justify-center mb-4`}>
-                <m.icon className={`w-6 h-6 ${m.color}`} />
+              <div className="flex items-center justify-between mb-4">
+                <div className="flex items-center gap-3">
+                  <div className={`p-2 rounded-lg bg-white/10 ${method.iconColor}`}>
+                    {method.icon}
+                  </div>
+                  <h3 className="text-xl font-bold text-white">{method.name}</h3>
+                </div>
               </div>
-              <h3 className="text-white font-bold text-lg mb-2">{m.title}</h3>
-              <p className="text-[hsl(45,50%,70%)] text-sm whitespace-pre-line leading-relaxed">
-                {m.desc}
-              </p>
+
+              <div className="mt-4">
+                <p className="text-sm text-gray-400 mb-1">Datos para transferir:</p>
+                <div className="flex items-center justify-between bg-black/30 p-3 rounded-lg border border-white/5">
+                  <span className="font-mono text-white font-medium truncate pr-2">{method.value}</span>
+                  <button
+                    onClick={() => handleCopy(method.value, method.name)}
+                    className="flex-shrink-0 p-2 hover:bg-white/10 rounded-full transition-colors group-hover:text-gold"
+                    aria-label="Copiar"
+                  >
+                    {copiedId === method.name ? (
+                      <Check className="w-4 h-4 text-green-400" />
+                    ) : (
+                      <Copy className="w-4 h-4" />
+                    )}
+                  </button>
+                </div>
+              </div>
             </motion.div>
           ))}
         </div>
 
-        {/* Main CTA */}
+        {/* Nota al pie */}
         <motion.div
-          initial={{ opacity: 0, scale: 0.95 }}
-          whileInView={{ opacity: 1, scale: 1 }}
+          initial={{ opacity: 0 }}
+          whileInView={{ opacity: 1 }}
           viewport={{ once: true }}
-          className="text-center"
+          className="text-center mt-12 text-gray-500 text-sm"
         >
-          <div className="inline-flex flex-col items-center gap-6 glass-card rounded-3xl px-12 py-10 border border-gold/20">
-            <div className="w-16 h-16 gold-gradient rounded-full flex items-center justify-center shadow-lg shadow-yellow-600/30">
-              <Heart className="w-8 h-8 text-[hsl(220,35%,6%)]" />
-            </div>
-            <div>
-              <h3 className="text-white text-2xl font-bold mb-2">Dar con Fe</h3>
-              <p className="text-[hsl(45,60%,75%)] max-w-sm">
-                Cada ofrenda es un acto de adoración. Gracias por ser parte de esta misión.
-              </p>
-            </div>
-            <a
-              href="#"
-              className="gold-gradient text-[hsl(220,35%,6%)] font-bold px-10 py-4 rounded-full flex items-center gap-2 hover:opacity-90 transition-opacity shadow-lg shadow-yellow-600/25"
-            >
-              <Heart className="w-5 h-5" />
-              Dar mi Ofrenda
-              <ArrowRight className="w-5 h-5" />
-            </a>
-            <div className="flex items-center gap-2 text-[hsl(220,15%,52%)] text-xs">
-              <Shield className="w-4 h-4" />
-              <span>Transacción segura y confidencial</span>
-            </div>
-          </div>
+          <p>Si necesitas ayuda con tu donación, contáctanos directamente.</p>
         </motion.div>
       </div>
     </section>
