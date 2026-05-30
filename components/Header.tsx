@@ -60,15 +60,19 @@ export default function Header() {
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
           <div className="flex items-center justify-between h-16 md:h-20">
             {/* Logo + Title */}
-            <motion.div
+             <motion.div
               initial={{ opacity: 0, x: -20 }}
               animate={{ opacity: 1, x: 0 }}
               className="flex items-center gap-3 cursor-pointer"
               onClick={() => handleNavClick('#inicio')}
             >
-              <div className="w-10 h-10 md:w-11 md:h-11 rounded-full gold-gradient flex items-center justify-center shadow-lg shadow-yellow-600/30">
-                <Cross className="w-5 h-5 md:w-6 md:h-6 text-[hsl(220,35%,6%)]" />
-              </div>
+              {/*  AQUÍ ESTÁ EL CAMBIO: Reemplaza el <div> de la cruz por este <img> */}
+              <img
+                src="/logo.png"
+                alt="Ministerio El Renuevo"
+                className="w-10 h-10 md:w-11 md:h-11 rounded-full object-contain shadow-lg shadow-yellow-600/30"
+              />
+              
               <div>
                 <p className="text-gold font-bold text-base md:text-lg leading-tight tracking-wide">
                   MINISTERIO EL RENUEVO
@@ -78,7 +82,6 @@ export default function Header() {
                 </p>
               </div>
             </motion.div>
-
             {/* Desktop Nav */}
             <nav className="hidden md:flex items-center gap-1">
               {navLinks.map((link) => {
