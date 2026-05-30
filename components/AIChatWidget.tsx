@@ -70,15 +70,15 @@ export default function AIChatWidget() {
       {/* Botón Flotante */}
       <button
         onClick={() => setIsOpen(!isOpen)}
-        className="fixed bottom-6 right-6 z-50 bg-gradient-to-r from-blue-600 to-teal-500 hover:from-blue-700 hover:to-teal-600 text-white rounded-full p-4 shadow-2xl transition-all duration-300 hover:scale-110 !text-white"
+        className="fixed bottom-6 right-6 z-50 bg-gradient-to-r from-blue-600 to-teal-500 hover:from-blue-700 hover:to-teal-600 text-white rounded-full p-4 shadow-2xl transition-all duration-300 hover:scale-110"
         aria-label="Chat con IA"
       >
         {isOpen ? (
-          <svg className="w-6 h-6 !text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+          <svg className="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
             <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M6 18L18 6M6 6l12 12" />
           </svg>
         ) : (
-          <svg className="w-6 h-6 !text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+          <svg className="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
             <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M8 12h.01M12 12h.01M16 12h.01M21 12c0 4.418-4.03 8-9 8a9.863 9.863 0 01-4.255-.949L3 20l1.395-3.72C3.512 15.042 3 13.574 3 12c0-4.418 4.03-8 9-8s9 3.582 9 8z" />
           </svg>
         )}
@@ -86,11 +86,11 @@ export default function AIChatWidget() {
 
       {/* Ventana de Chat */}
       {isOpen && (
-        <div className="fixed bottom-24 right-6 z-50 w-96 max-w-[calc(100vw-3rem)] bg-[#1e293b] rounded-2xl shadow-2xl border border-[#334155] overflow-hidden !text-[#e2e8f0]">
+        <div className="fixed bottom-24 right-6 z-50 w-96 max-w-[calc(100vw-3rem)] bg-[#1e293b] rounded-2xl shadow-2xl border border-[#334155] overflow-hidden">
           {/* Header */}
-          <div className="bg-gradient-to-r from-blue-600 to-teal-500 p-4 !text-white">
-            <h3 className="font-semibold text-lg !text-white">Asistente Virtual</h3>
-            <p className="text-blue-100 text-sm !text-blue-100">Ministerio El Renuevo</p>
+          <div className="bg-gradient-to-r from-blue-600 to-teal-500 p-4">
+            <h3 className="text-white font-semibold text-lg">Asistente Virtual</h3>
+            <p className="text-blue-100 text-sm">Ministerio El Renuevo</p>
           </div>
 
           {/* Mensajes */}
@@ -110,11 +110,11 @@ export default function AIChatWidget() {
                     <div
                       className={`max-w-[80%] rounded-2xl px-4 py-2 ${
                         msg.role === 'user'
-                          ? 'bg-blue-600 !text-white rounded-br-none'
-                          : 'bg-[#334155] !text-[#e2e8f0] rounded-bl-none shadow'
+                          ? 'bg-blue-600 text-white rounded-br-none'
+                          : 'bg-[#334155] text-[#e2e8f0] rounded-bl-none shadow'
                       }`}
                     >
-                      <p className="text-sm whitespace-pre-wrap !text-inherit">{msg.content}</p>
+                      <p className="text-sm whitespace-pre-wrap">{msg.content}</p>
                     </div>
                   </div>
                 ))}
@@ -142,13 +142,13 @@ export default function AIChatWidget() {
                 value={input}
                 onChange={(e) => setInput(e.target.value)}
                 placeholder="Escribe tu mensaje..."
-                className="flex-1 px-4 py-2 border border-[#475569] rounded-full focus:outline-none focus:ring-2 focus:ring-blue-500 bg-[#0f172a] !text-[#e2e8f0] placeholder-[#64748b] text-sm"
+                className="flex-1 px-4 py-2 border border-[#475569] rounded-full focus:outline-none focus:ring-2 focus:ring-blue-500 bg-[#0f172a] text-[#e2e8f0] placeholder-[#64748b] text-sm"
                 disabled={isLoading}
               />
               <button
                 type="submit"
                 disabled={isLoading || !input.trim()}
-                className="bg-blue-600 hover:bg-blue-700 disabled:bg-[#475569] !text-white rounded-full p-2 transition-colors"
+                className="bg-blue-600 hover:bg-blue-700 disabled:bg-[#475569] text-white rounded-full p-2 transition-colors"
               >
                 <svg className="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                   <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M12 19l9 2-9-18-9 18 9-2zm0 0v-8" />
