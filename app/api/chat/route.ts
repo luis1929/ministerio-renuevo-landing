@@ -15,7 +15,7 @@ export async function POST(request: Request) {
     ];
 
     // Llamar a Ollama local
-    const response = await fetch('http://localhost:11434/api/generate', {
+    const response = await fetch('http://157.137.218.136:11434/api/generate', {
       method: 'POST',
       headers: {
         'Content-Type': 'application/json',
