@@ -1,7 +1,10 @@
 require('dotenv').config();
 const { createClient } = require('@supabase/supabase-js');
+const ws = require('ws');
 
-const supabase = createClient(process.env.NEXT_PUBLIC_SUPABASE_URL, process.env.NEXT_PUBLIC_SUPABASE_ANON_KEY);
+const supabase = createClient(process.env.NEXT_PUBLIC_SUPABASE_URL, process.env.NEXT_PUBLIC_SUPABASE_ANON_KEY, {
+  realtime: { transport: ws }
+});
 
 async function test() {
   console.log("Intentando conectar a:", process.env.NEXT_PUBLIC_SUPABASE_URL);

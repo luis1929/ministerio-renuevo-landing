@@ -6,6 +6,7 @@ import HeroCarousel from '@/components/HeroCarousel';
 import VirtualMeetings from '@/components/VirtualMeetings';
 import BlogSection from '@/components/BlogSection';
 import DonationsSection from '@/components/DonationsSection';
+import RegistroSection from '@/components/RegistroSection';
 import SocialSection from '@/components/SocialSection';
 import SocialHub from '@/components/SocialHub';
 import Footer from '@/components/Footer';
@@ -44,6 +45,10 @@ export default async function Home() {
       <BlogSection posts={blogPosts} />
 
       <DonationsSection />
+
+      <div className="section-divider" />
+
+      <RegistroSection />
 
       <div className="section-divider" />
 
