@@ -1,10 +1,5 @@
 import { NextResponse } from 'next/server'
-import { createClient } from '@supabase/supabase-js'
-
-const supabaseUrl = process.env.NEXT_PUBLIC_SUPABASE_URL!
-const supabaseServiceKey = process.env.SUPABASE_SERVICE_ROLE_KEY!
-
-const supabase = createClient(supabaseUrl, supabaseServiceKey)
+import { supabaseAdmin } from '@/lib/supabase-admin'
 
 const opcionesServicio = [
   'Culto Dominical (10:00 AM)',
@@ -13,6 +8,20 @@ const opcionesServicio = [
   'Evento Especial',
   'Primera Visita',
 ] as const
+
+export async function GET() {
+  const { data, error } = await supabaseAdmin
+    .from('registraciones')
+    .select('*')
+    .order('created_at', { ascending: false })
+    .limit(100)
+
+  if (error) {
+    return NextResponse.json({ error: error.message }, { status: 500 })
+  }
+
+  return NextResponse.json({ data })
+}
 
 export async function POST(request: Request) {
   try {
@@ -33,7 +42,7 @@ export async function POST(request: Request) {
       )
     }
 
-    const { data, error } = await supabase
+    const { data, error } = await supabaseAdmin
       .from('registraciones')
       .insert([
         {
@@ -62,5 +71,56 @@ export async function POST(request: Request) {
       { error: 'Error interno del servidor' },
       { status: 500 }
     )
+  }
+}
+
+export async function PATCH(request: Request) {
+  try {
+    const body = await request.json()
+    const { id, ...campos } = body
+
+    if (!id) {
+      return NextResponse.json({ error: 'ID es obligatorio' }, { status: 400 })
+    }
+
+    const { data, error } = await supabaseAdmin
+      .from('registraciones')
+      .update(campos)
+      .eq('id', id)
+      .select()
+
+    if (error) {
+      return NextResponse.json({ error: error.message }, { status: 500 })
+    }
+
+    return NextResponse.json({ data })
+  } catch (err) {
+    console.error('Unexpected error:', err)
+    return NextResponse.json({ error: 'Error interno del servidor' }, { status: 500 })
+  }
+}
+
+export async function DELETE(request: Request) {
+  try {
+    const { searchParams } = new URL(request.url)
+    const id = searchParams.get('id')
+
+    if (!id) {
+      return NextResponse.json({ error: 'ID es obligatorio' }, { status: 400 })
+    }
+
+    const { error } = await supabaseAdmin
+      .from('registraciones')
+      .delete()
+      .eq('id', id)
+
+    if (error) {
+      return NextResponse.json({ error: error.message }, { status: 500 })
+    }
+
+    return NextResponse.json({ message: 'Eliminado correctamente' })
+  } catch (err) {
+    console.error('Unexpected error:', err)
+    return NextResponse.json({ error: 'Error interno del servidor' }, { status: 500 })
   }
 }

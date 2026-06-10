@@ -1,16 +1,15 @@
 'use client';
 
 import { useState, useEffect } from 'react';
+import { useRouter } from 'next/navigation';
 import { motion, AnimatePresence } from 'framer-motion';
-import { Menu, X, Cross, Share2, Facebook, Instagram, Music2 } from 'lucide-react';
+import { Menu, X, Cross, Share2, Facebook, Instagram, Music2, LogIn } from 'lucide-react';
 
 const navLinks = [
   { href: '#inicio', label: 'Inicio' },
-  { href: '#radio', label: 'Radio' },
   { href: '#blog', label: 'Blog' },
   { href: '#registro', label: 'Registro' },
   { href: '#donaciones', label: 'Donaciones' },
-  { href: '#social', label: 'Social' },
 ];
 
 const socialLinks = [
@@ -20,6 +19,7 @@ const socialLinks = [
 ];
 
 export default function Header() {
+  const router = useRouter();
   const [isScrolled, setIsScrolled] = useState(false);
   const [activeSection, setActiveSection] = useState('inicio');
   const [mobileOpen, setMobileOpen] = useState(false);
@@ -128,12 +128,13 @@ export default function Header() {
                 ))}
               </div>
 
-              {/* CTA Button */}
+              {/* Login Button */}
               <button
-                onClick={() => handleNavClick('#registro')}
-                className="gold-gradient text-[hsl(220,35%,6%)] font-semibold text-sm px-5 py-2 rounded-full hover:opacity-90 transition-opacity shadow-md shadow-yellow-600/20"
+                onClick={() => router.push('/login')}
+                className="gold-gradient text-[hsl(220,35%,6%)] font-semibold text-sm px-5 py-2 rounded-full hover:opacity-90 transition-opacity shadow-md shadow-yellow-600/20 flex items-center gap-1.5"
               >
-                Registrarse
+                <LogIn className="w-3.5 h-3.5" />
+                Admin
               </button>
             </div>
 
@@ -179,10 +180,11 @@ export default function Header() {
               })}
 
               <button
-                onClick={() => handleNavClick('#registro')}
-                className="mt-2 gold-gradient text-[hsl(220,35%,6%)] font-semibold text-sm px-5 py-3 rounded-full"
+                onClick={() => { setMobileOpen(false); router.push('/login'); }}
+                className="mt-2 gold-gradient text-[hsl(220,35%,6%)] font-semibold text-sm px-5 py-3 rounded-full flex items-center justify-center gap-2"
               >
-                Registrarse ahora
+                <LogIn className="w-4 h-4" />
+                Admin
               </button>
 
               {/* Mobile Social Icons */}

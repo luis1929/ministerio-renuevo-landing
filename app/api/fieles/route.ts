@@ -1,13 +1,22 @@
 import { NextResponse } from 'next/server'
-import { createClient } from '@supabase/supabase-js'
+import { supabaseAdmin } from '@/lib/supabase-admin'
 import { sendTelegramNotification } from '@/lib/telegram'
 
-const supabaseUrl = process.env.NEXT_PUBLIC_SUPABASE_URL!
-const supabaseServiceKey = process.env.SUPABASE_SERVICE_ROLE_KEY!
-
-const supabase = createClient(supabaseUrl, supabaseServiceKey)
-
 const EMAIL_REGEX = /^[^\s@]+@[^\s@]+\.[^\s@]+$/
+
+export async function GET() {
+  const { data, error } = await supabaseAdmin
+    .from('fieles')
+    .select('*')
+    .order('fecha_registro', { ascending: false })
+    .limit(100)
+
+  if (error) {
+    return NextResponse.json({ error: error.message }, { status: 500 })
+  }
+
+  return NextResponse.json({ data })
+}
 
 export async function POST(request: Request) {
   try {
@@ -35,7 +44,7 @@ export async function POST(request: Request) {
       )
     }
 
-    const { data, error } = await supabase
+    const { data, error } = await supabaseAdmin
       .from('fieles')
       .insert([
         {
@@ -63,7 +72,7 @@ export async function POST(request: Request) {
     const fielId = nuevoFiel?.id
 
     if (fielId) {
-      await supabase.from('comunicaciones').insert([
+      await supabaseAdmin.from('comunicaciones').insert([
         {
           fiel_id: fielId,
           tipo: 'Bienvenida',
@@ -92,5 +101,38 @@ export async function POST(request: Request) {
       { error: 'Error interno del servidor' },
       { status: 500 }
     )
+  }
+}
+
+export async function PATCH(request: Request) {
+  try {
+    const body = await request.json()
+    const { id, ...campos } = body
+    if (!id) return NextResponse.json({ error: 'ID es obligatorio' }, { status: 400 })
+
+    const { data, error } = await supabaseAdmin
+      .from('fieles')
+      .update(campos)
+      .eq('id', id)
+      .select()
+
+    if (error) return NextResponse.json({ error: error.message }, { status: 500 })
+    return NextResponse.json({ data })
+  } catch (err) {
+    return NextResponse.json({ error: 'Error interno del servidor' }, { status: 500 })
+  }
+}
+
+export async function DELETE(request: Request) {
+  try {
+    const { searchParams } = new URL(request.url)
+    const id = searchParams.get('id')
+    if (!id) return NextResponse.json({ error: 'ID es obligatorio' }, { status: 400 })
+
+    const { error } = await supabaseAdmin.from('fieles').delete().eq('id', id)
+    if (error) return NextResponse.json({ error: error.message }, { status: 500 })
+    return NextResponse.json({ message: 'Eliminado correctamente' })
+  } catch (err) {
+    return NextResponse.json({ error: 'Error interno del servidor' }, { status: 500 })
   }
 }

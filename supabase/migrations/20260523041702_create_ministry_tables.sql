@@ -2,12 +2,6 @@
   # Ministry El Renuevo - Core Tables
 
   1. New Tables
-    - `registrations` - Visitor attendance registrations
-      - `id` (uuid, primary key)
-      - `nombre` (text) - Full name
-      - `whatsapp` (text) - WhatsApp number
-      - `servicio` (text) - Service type (e.g. Domingo, Miercoles)
-      - `created_at` (timestamptz)
     - `blog_posts` - Blog/news articles
       - `id` (uuid, primary key)
       - `titulo` (text) - Post title
@@ -19,30 +13,9 @@
       - `created_at` (timestamptz)
 
   2. Security
-    - Enable RLS on both tables
-    - `registrations`: allow authenticated insert; admin select (service role only via anon restricted)
+    - Enable RLS on blog_posts
     - `blog_posts`: public read for published posts; no public write
 */
-
-CREATE TABLE IF NOT EXISTS registrations (
-  id uuid PRIMARY KEY DEFAULT gen_random_uuid(),
-  nombre text NOT NULL,
-  whatsapp text NOT NULL,
-  servicio text NOT NULL DEFAULT 'Domingo',
-  created_at timestamptz DEFAULT now()
-);
-
-ALTER TABLE registrations ENABLE ROW LEVEL SECURITY;
-
-CREATE POLICY "Anyone can insert registration"
-  ON registrations FOR INSERT
-  TO anon
-  WITH CHECK (true);
-
-CREATE POLICY "Authenticated can view registrations"
-  ON registrations FOR SELECT
-  TO authenticated
-  USING (true);
 
 CREATE TABLE IF NOT EXISTS blog_posts (
   id uuid PRIMARY KEY DEFAULT gen_random_uuid(),

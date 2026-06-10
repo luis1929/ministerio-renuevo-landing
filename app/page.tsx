@@ -8,7 +8,6 @@ import BlogSection from '@/components/BlogSection';
 import DonationsSection from '@/components/DonationsSection';
 import RegistroSection from '@/components/RegistroSection';
 import SocialSection from '@/components/SocialSection';
-import SocialHub from '@/components/SocialHub';
 import Footer from '@/components/Footer';
 import AIChatWidget from '@/components/AIChatWidget'; // 👈 Agregado
 
@@ -55,8 +54,6 @@ export default async function Home() {
       <SocialSection />
 
       <div className="section-divider" />
-
-      <SocialHub />
 
       <Footer />
 

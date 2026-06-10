@@ -7,6 +7,7 @@ const nextConfig = {
   experimental: {
     serverActions: true,
   },
+  allowedDevHosts: ['dev.envivoministerioelrenuevo.org'],
 };
 
 module.exports = nextConfig;
