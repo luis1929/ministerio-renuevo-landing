@@ -130,6 +130,16 @@ export default function Header() {
               </div>
 
               <button
+                onClick={() => handleNavClick('#reuniones')}
+                className={`relative px-4 py-2 text-sm font-medium transition-colors duration-200 rounded-md ${activeSection === 'reuniones' ? 'text-gold' : 'text-[hsl(45,70%,80%)] hover:text-gold'}`}
+              >
+                Reuniones
+                {activeSection === 'reuniones' && (
+                  <motion.span layoutId="activeNav" className="absolute inset-x-1 -bottom-0.5 h-0.5 bg-gold rounded-full" transition={{ type: 'spring', stiffness: 380, damping: 30 }} />
+                )}
+              </button>
+
+              <button
                 onClick={() => handleNavClick('#blog')}
                 className={`relative px-4 py-2 text-sm font-medium transition-colors duration-200 rounded-md ${activeSection === 'blog' ? 'text-gold' : 'text-[hsl(45,70%,80%)] hover:text-gold'}`}
               >
