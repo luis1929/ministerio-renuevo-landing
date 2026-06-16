@@ -34,6 +34,9 @@ yarn-error.log*
 next-env.d.ts
 .env*
 
+# Bolt.new scaffold (redundante)
+/ministerio-renuevo-landing/
+
 # IA / Ollama / OpenWebUI
 open-webui-data/
 *.sqlite
