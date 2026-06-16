@@ -8,7 +8,6 @@ import { useInvoke } from './InvokeProvider';
 
 const navLinks = [
   { href: '#inicio', label: 'Inicio' },
-  { href: '#reuniones', label: 'Reuniones' },
   { href: '#blog', label: 'Blog' },
   { href: '#seccion-registro', label: 'Registro' },
 ];
@@ -94,32 +93,16 @@ export default function Header() {
             </motion.div>
             {/* Desktop Nav */}
             <nav className="hidden md:flex items-center gap-1">
-              {navLinks.map((link) => {
-                const sectionId = link.href.replace('#', '');
-                const isActive = activeSection === sectionId;
-                return (
-                  <button
-                    key={link.href}
-                    onClick={() => handleNavClick(link.href)}
-                    className={`relative px-4 py-2 text-sm font-medium transition-colors duration-200 rounded-md ${
-                      isActive
-                        ? 'text-gold'
-                        : 'text-[hsl(45,70%,80%)] hover:text-gold'
-                    }`}
-                  >
-                    {link.label}
-                    {isActive && (
-                      <motion.span
-                        layoutId="activeNav"
-                        className="absolute inset-x-1 -bottom-0.5 h-0.5 bg-gold rounded-full"
-                        transition={{ type: 'spring', stiffness: 380, damping: 30 }}
-                      />
-                    )}
-                  </button>
-                );
-              })}
+              <button
+                onClick={() => handleNavClick('#inicio')}
+                className={`relative px-4 py-2 text-sm font-medium transition-colors duration-200 rounded-md ${activeSection === 'inicio' ? 'text-gold' : 'text-[hsl(45,70%,80%)] hover:text-gold'}`}
+              >
+                Inicio
+                {activeSection === 'inicio' && (
+                  <motion.span layoutId="activeNav" className="absolute inset-x-1 -bottom-0.5 h-0.5 bg-gold rounded-full" transition={{ type: 'spring', stiffness: 380, damping: 30 }} />
+                )}
+              </button>
 
-              {/* Nuestra casa dropdown */}
               <div className="relative">
                 <button
                   onClick={() => setCasaOpen(!casaOpen)}
@@ -144,6 +127,26 @@ export default function Header() {
                   </div>
                 )}
               </div>
+
+              <button
+                onClick={() => handleNavClick('#blog')}
+                className={`relative px-4 py-2 text-sm font-medium transition-colors duration-200 rounded-md ${activeSection === 'blog' ? 'text-gold' : 'text-[hsl(45,70%,80%)] hover:text-gold'}`}
+              >
+                Blog
+                {activeSection === 'blog' && (
+                  <motion.span layoutId="activeNav" className="absolute inset-x-1 -bottom-0.5 h-0.5 bg-gold rounded-full" transition={{ type: 'spring', stiffness: 380, damping: 30 }} />
+                )}
+              </button>
+
+              <button
+                onClick={() => handleNavClick('#seccion-registro')}
+                className={`relative px-4 py-2 text-sm font-medium transition-colors duration-200 rounded-md ${activeSection === 'seccion-registro' ? 'text-gold' : 'text-[hsl(45,70%,80%)] hover:text-gold'}`}
+              >
+                Registro
+                {activeSection === 'seccion-registro' && (
+                  <motion.span layoutId="activeNav" className="absolute inset-x-1 -bottom-0.5 h-0.5 bg-gold rounded-full" transition={{ type: 'spring', stiffness: 380, damping: 30 }} />
+                )}
+              </button>
             </nav>
 
             {/* Desktop: Social Icons + CTA */}
@@ -214,6 +217,22 @@ export default function Header() {
                   </button>
                 );
               })}
+
+              {/* Nuestra casa - mobile with sub-items */}
+              <div className="border-t border-[hsl(43,96%,56%)]/10 pt-2 mt-1">
+                <p className="px-4 py-2 text-xs font-semibold uppercase tracking-wider text-[hsl(43,80%,70%)]">
+                  Nuestra casa
+                </p>
+                {casaItems.map((item) => (
+                  <button
+                    key={item.href}
+                    onClick={() => { setMobileOpen(false); router.push(item.href); }}
+                    className="block w-full text-left px-4 py-3 rounded-lg text-sm font-medium text-[hsl(45,70%,80%)] hover:bg-[hsl(220,28%,18%)] hover:text-gold transition-colors"
+                  >
+                    {item.label}
+                  </button>
+                ))}
+              </div>
 
               <button
                 onClick={() => { setMobileOpen(false); router.push('/login'); }}
