@@ -20,10 +20,10 @@ const socialLinks = [
 ];
 
 const casaItems = [
-  { href: '#nuestra-historia', label: 'Nuestra historia' },
-  { href: '#nuestra-identidad', label: 'Nuestra identidad' },
-  { href: '#nuestra-declaracion-de-fe', label: 'Nuestra declaración de fe' },
-  { href: '#nuestros-pastores', label: 'Nuestros pastores' },
+  { href: '/nosotros/historia', label: 'Nuestra historia' },
+  { href: '/nosotros/identidad', label: 'Nuestra identidad' },
+  { href: '/nosotros/declaracion-de-fe', label: 'Nuestra declaración de fe' },
+  { href: '/nosotros/pastores', label: 'Nuestros pastores' },
 ];
 
 export default function Header() {
@@ -135,7 +135,7 @@ export default function Header() {
                     {casaItems.map((item) => (
                       <button
                         key={item.href}
-                        onClick={() => { setCasaOpen(false); handleNavClick(item.href); }}
+                        onClick={() => { setCasaOpen(false); router.push(item.href); }}
                         className="block w-full text-left px-5 py-3 text-sm font-medium text-gray-700 hover:text-gold hover:bg-gray-50 transition-colors"
                       >
                         {item.label}
