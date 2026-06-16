@@ -8,6 +8,7 @@ import { useInvoke } from './InvokeProvider';
 
 const navLinks = [
   { href: '#inicio', label: 'Inicio' },
+  { href: '#reuniones', label: 'Reuniones' },
   { href: '#blog', label: 'Blog' },
   { href: '#seccion-registro', label: 'Registro' },
 ];
