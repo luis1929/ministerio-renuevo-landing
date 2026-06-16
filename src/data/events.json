@@ -1,0 +1,46 @@
+[
+  {
+    "id": 1,
+    "tipo": "Evento",
+    "titulo": "Conferencia de Fe y Restauración",
+    "descripcion_corta": "Un fin de semana de enseñanza, adoración y restauración espiritual con pastores invitados.",
+    "descripcion_larga": "Te esperamos en la Conferencia de Fe y Restauración, tres días de intensa búsqueda de Dios. Contaremos con la participación de pastores invitados de diferentes regiones, talleres de sanidad interior, sesiones de consejería y momentos de adoración profunda. No faltes a esta cita donde el Espíritu Santo se moverá con poder.",
+    "fecha": "2026-07-15",
+    "hora": "7:00 PM",
+    "lugar": "Auditorio Principal - Ministerio El Renuevo",
+    "imagen": "https://images.pexels.com/photos/1437881/pexels-photo-1437881.jpeg?auto=compress&cs=tinysrgb&w=1200"
+  },
+  {
+    "id": 2,
+    "tipo": "Noticia",
+    "titulo": "Nuevo Grupo de Jóvenes 'Generación de Impacto'",
+    "descripcion_corta": "Lanzamos el ministerio juvenil con reuniones todos los sábados a las 5:00 PM.",
+    "descripcion_larga": "Estamos emocionados de anunciar el lanzamiento de 'Generación de Impacto', nuestro nuevo ministerio juvenil. Un espacio diseñado para que los jóvenes entre 12 y 25 años encuentren propósito, desarrollen su liderazgo y crezcan en su relación con Dios. Habrá música, dinámicas, enseñanza bíblica aplicada a la vida cotidiana y actividades de servicio comunitario. ¡Invita a tus amigos!",
+    "fecha": "2026-06-20",
+    "hora": "5:00 PM",
+    "lugar": "Salón Juvenil - Ministerio El Renuevo",
+    "imagen": "https://images.pexels.com/photos/6893806/pexels-photo-6893806.jpeg?auto=compress&cs=tinysrgb&w=1200"
+  },
+  {
+    "id": 3,
+    "tipo": "Campaña",
+    "titulo": "Campaña de Ayuda Comunitaria 'Unidos por Barranquilla'",
+    "descripcion_corta": "Jornada de donación de alimentos, ropa y medicinas para familias vulnerables.",
+    "descripcion_larga": "Nos unimos como iglesia para bendecir a nuestra ciudad. La campaña 'Unidos por Barranquilla' recolectará alimentos no perecederos, ropa en buen estado, medicinas sin prescripción y útiles escolares. Puntos de recolección estarán abiertos en el templo de lunes a viernes de 9:00 AM a 6:00 PM. La entrega se realizará el último día en las comunidades necesitadas. Sé parte de esta cadena de bendición.",
+    "fecha": "2026-08-01",
+    "hora": "8:00 AM - 4:00 PM",
+    "lugar": "Sede Central - Ministerio El Renuevo",
+    "imagen": "https://images.pexels.com/photos/6646854/pexels-photo-6646854.jpeg?auto=compress&cs=tinysrgb&w=1200"
+  },
+  {
+    "id": 4,
+    "tipo": "Evento",
+    "titulo": "Bautismo Masivo 'Nuevas Aguas'",
+    "descripcion_corta": "Ceremonia de bautismo para nuevos creyentes. Inscripciones abiertas hasta el día anterior.",
+    "descripcion_larga": "Celebra con nosotros el Bautismo Masivo 'Nuevas Aguas'. Si has entregado tu vida al Señor y aún no te has bautizado, esta es tu oportunidad. Habrá transporte desde el templo hasta el lugar del evento, refrigerio para los asistentes y un momento especial de oración por los bautizados. Requisito: haber asistido al taller pre-bautismal. Inscríbete en la recepción del ministerio.",
+    "fecha": "2026-05-30",
+    "hora": "9:00 AM",
+    "lugar": "Playa de Puerto Colombia",
+    "imagen": "https://images.pexels.com/photos/8208833/pexels-photo-8208833.jpeg?auto=compress&cs=tinysrgb&w=1200"
+  }
+]

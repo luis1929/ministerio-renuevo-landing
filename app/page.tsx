@@ -1,6 +1,10 @@
+export const dynamic = 'force-dynamic'
+
 import { supabase } from '@/lib/supabase';
 import type { BlogPost } from '@/lib/supabase';
 
+import PageShell from '@/components/PageShell';
+import RevealContent from '@/components/RevealContent';
 import Header from '@/components/Header';
 import HeroCarousel from '@/components/HeroCarousel';
 import VirtualMeetings from '@/components/VirtualMeetings';
@@ -9,8 +13,6 @@ import DonationsSection from '@/components/DonationsSection';
 import RegistroSection from '@/components/RegistroSection';
 import SocialSection from '@/components/SocialSection';
 import Footer from '@/components/Footer';
-import AIChatWidget from '@/components/AIChatWidget'; // 👈 Agregado
-
 async function getBlogPosts(): Promise<BlogPost[]> {
   const { data, error } = await supabase
     .from('blog_posts')
@@ -30,35 +32,40 @@ export default async function Home() {
   const blogPosts = await getBlogPosts();
 
   return (
+    <PageShell>
     <main className="min-h-screen bg-[hsl(220,35%,6%)]">
       <Header />
 
       <HeroCarousel />
 
-      <div className="section-divider" />
+      <RevealContent>
+        <div className="section-divider" />
 
-      <VirtualMeetings />
+        <VirtualMeetings />
 
-      <div className="section-divider" />
+        <div className="section-divider" />
 
-      <BlogSection posts={blogPosts} />
+        <BlogSection posts={blogPosts} />
 
-      <DonationsSection />
+        <DonationsSection />
 
-      <div className="section-divider" />
+        <div className="section-divider" />
 
-      <RegistroSection />
+        <div id="seccion-registro">
+          <RegistroSection />
+        </div>
 
-      <div className="section-divider" />
+        <div className="section-divider" />
 
-      <SocialSection />
+        <div id="seccion-sociales">
+          <SocialSection />
+        </div>
 
-      <div className="section-divider" />
+        <div className="section-divider" />
 
-      <Footer />
-
-      {/* 👇 Widget de Chat IA Flotante */}
-      <AIChatWidget />
+        <Footer />
+      </RevealContent>
     </main>
+    </PageShell>
   );
 }

@@ -1,4 +1,5 @@
 import { NextResponse } from 'next/server'
+import { revalidatePath } from 'next/cache'
 import { supabaseAdmin } from '@/lib/supabase-admin'
 
 export async function GET() {
@@ -33,7 +34,7 @@ export async function POST(request: Request) {
           titulo: titulo.trim(),
           resumen: resumen?.trim() || '',
           contenido: contenido?.trim() || '',
-          imagen_url: imagen_url?.trim() || null,
+          imagen_url: imagen_url?.trim() || '',
           categoria: categoria?.trim() || 'General',
           publicado: publicado ?? false,
         },
@@ -44,6 +45,7 @@ export async function POST(request: Request) {
       return NextResponse.json({ error: error.message }, { status: 500 })
     }
 
+    revalidatePath('/')
     return NextResponse.json({ data }, { status: 201 })
   } catch (err) {
     console.error('Unexpected error:', err)
@@ -76,6 +78,7 @@ export async function PATCH(request: Request) {
       return NextResponse.json({ error: error.message }, { status: 500 })
     }
 
+    revalidatePath('/')
     return NextResponse.json({ data })
   } catch (err) {
     console.error('Unexpected error:', err)
@@ -107,6 +110,7 @@ export async function DELETE(request: Request) {
       return NextResponse.json({ error: error.message }, { status: 500 })
     }
 
+    revalidatePath('/')
     return NextResponse.json({ message: 'Eliminado correctamente' })
   } catch (err) {
     console.error('Unexpected error:', err)

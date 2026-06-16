@@ -1,47 +1,9 @@
 'use client';
 
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
 import { motion } from 'framer-motion';
 import { Copy, Check, CreditCard, DollarSign, Building, Smartphone, Globe } from 'lucide-react';
-
-// Datos reales extraídos de tu imagen
-const donationMethods = [
-  {
-    name: 'Zelle',
-    icon: <ZelleIcon className="w-8 h-8" />,
-    value: 'M.Elrenuevo@gmail.com',
-    color: 'bg-purple-900/30 border-purple-500/30 text-purple-300',
-    iconColor: 'text-purple-500'
-  },
-  {
-    name: 'PayPal',
-    icon: <DollarSign className="w-8 h-8 text-blue-500" />,
-    value: 'M.Elrenuevo@gmail.com',
-    color: 'bg-blue-900/30 border-blue-500/30 text-blue-300',
-    iconColor: 'text-blue-500'
-  },
-  {
-    name: 'Cash App',
-    icon: <DollarSign className="w-8 h-8 text-green-500" />,
-    value: '$Ministerioelrenuevo',
-    color: 'bg-green-900/30 border-green-500/30 text-green-300',
-    iconColor: 'text-green-500'
-  },
-  {
-    name: 'Bancolombia',
-    icon: <Building className="w-8 h-8 text-yellow-500" />,
-    value: '487-0000-144-26',
-    color: 'bg-yellow-900/30 border-yellow-500/30 text-yellow-300',
-    iconColor: 'text-yellow-500'
-  },
-  {
-    name: 'Square',
-    icon: <CreditCard className="w-8 h-8 text-white" />,
-    value: '(Pastor Haim)',
-    color: 'bg-gray-800/50 border-gray-600/30 text-gray-300',
-    iconColor: 'text-white'
-  }
-];
+import type { Donacion } from '@/lib/supabase-admin';
 
 function ZelleIcon({ className }: { className?: string }) {
   return (
@@ -51,8 +13,58 @@ function ZelleIcon({ className }: { className?: string }) {
   );
 }
 
+const iconMap: Record<string, { icon: React.ElementType; colors: string; iconColor: string }> = {
+  zelle: {
+    icon: ZelleIcon,
+    colors: 'bg-purple-900/30 border-purple-500/30 text-purple-300',
+    iconColor: 'text-purple-500',
+  },
+  paypal: {
+    icon: DollarSign,
+    colors: 'bg-blue-900/30 border-blue-500/30 text-blue-300',
+    iconColor: 'text-blue-500',
+  },
+  cashapp: {
+    icon: DollarSign,
+    colors: 'bg-green-900/30 border-green-500/30 text-green-300',
+    iconColor: 'text-green-500',
+  },
+  bancolombia: {
+    icon: Building,
+    colors: 'bg-yellow-900/30 border-yellow-500/30 text-yellow-300',
+    iconColor: 'text-yellow-500',
+  },
+  square: {
+    icon: CreditCard,
+    colors: 'bg-gray-800/50 border-gray-600/30 text-gray-300',
+    iconColor: 'text-white',
+  },
+  generic: {
+    icon: Globe,
+    colors: 'bg-teal-900/30 border-teal-500/30 text-teal-300',
+    iconColor: 'text-teal-500',
+  },
+};
+
 export default function DonationsSection() {
+  const [donationMethods, setDonationMethods] = useState<Donacion[]>([]);
+  const [loading, setLoading] = useState(true);
   const [copiedId, setCopiedId] = useState<string | null>(null);
+
+  useEffect(() => {
+    async function load() {
+      try {
+        const res = await fetch('/api/donaciones');
+        const json = await res.json();
+        if (json.data) setDonationMethods(json.data.filter((d: Donacion) => d.activo));
+      } catch {
+        setDonationMethods([]);
+      } finally {
+        setLoading(false);
+      }
+    }
+    load();
+  }, []);
 
   const handleCopy = (text: string, id: string) => {
     navigator.clipboard.writeText(text);
@@ -63,7 +75,6 @@ export default function DonationsSection() {
   return (
     <section id="donaciones" className="py-24 px-4 sm:px-6 lg:px-8 bg-[hsl(220,35%,6%)]">
       <div className="max-w-7xl mx-auto">
-        {/* Header */}
         <motion.div
           initial={{ opacity: 0, y: 20 }}
           whileInView={{ opacity: 1, y: 0 }}
@@ -76,54 +87,62 @@ export default function DonationsSection() {
           </h2>
           <div className="section-divider max-w-xs mx-auto mb-6" />
           <p className="text-[hsl(45,60%,75%)] text-lg max-w-3xl mx-auto font-serif italic">
-            "Honra a Jehová con tus bienes, Y con las primicias de todos tus frutos; 
-            Y serán llenos tus graneros con abundancia, Y tus lagares rebosarán de mosto."
+            &ldquo;Honra a Jehová con tus bienes, Y con las primicias de todos tus frutos;
+            Y serán llenos tus graneros con abundancia, Y tus lagares rebosarán de mosto.&rdquo;
           </p>
-          <p className="text-gold font-bold mt-2">— PROVERBIOS 3:9-10 —</p>
+          <p className="text-gold font-bold mt-2">&mdash; PROVERBIOS 3:9-10 &mdash;</p>
         </motion.div>
 
-        {/* Grid de Métodos de Pago */}
-        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6 max-w-5xl mx-auto">
-          {donationMethods.map((method, index) => (
-            <motion.div
-              key={method.name}
-              initial={{ opacity: 0, y: 20 }}
-              whileInView={{ opacity: 1, y: 0 }}
-              viewport={{ once: true }}
-              transition={{ delay: index * 0.1 }}
-              className={`p-6 rounded-xl border backdrop-blur-sm flex flex-col justify-between h-full group hover:scale-[1.02] transition-transform duration-300 ${method.color}`}
-            >
-              <div className="flex items-center justify-between mb-4">
-                <div className="flex items-center gap-3">
-                  <div className={`p-2 rounded-lg bg-white/10 ${method.iconColor}`}>
-                    {method.icon}
+        {loading ? (
+          <div className="flex justify-center py-16">
+            <div className="w-8 h-8 border-2 border-gold border-t-transparent rounded-full animate-spin" />
+          </div>
+        ) : (
+          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6 max-w-5xl mx-auto">
+            {donationMethods.map((method, index) => {
+              const style = iconMap[method.icono] || iconMap.generic;
+              const Icon = style.icon;
+              return (
+                <motion.div
+                  key={method.id}
+                  initial={{ opacity: 0, y: 20 }}
+                  whileInView={{ opacity: 1, y: 0 }}
+                  viewport={{ once: true }}
+                  transition={{ delay: index * 0.1 }}
+                  className={`p-6 rounded-xl border backdrop-blur-sm flex flex-col justify-between h-full group hover:scale-[1.02] transition-transform duration-300 ${style.colors}`}
+                >
+                  <div className="flex items-center justify-between mb-4">
+                    <div className="flex items-center gap-3">
+                      <div className={`p-2 rounded-lg bg-white/10 ${style.iconColor}`}>
+                        <Icon className="w-8 h-8" />
+                      </div>
+                      <h3 className="text-xl font-bold text-white">{method.metodo}</h3>
+                    </div>
                   </div>
-                  <h3 className="text-xl font-bold text-white">{method.name}</h3>
-                </div>
-              </div>
 
-              <div className="mt-4">
-                <p className="text-sm text-gray-400 mb-1">Datos para transferir:</p>
-                <div className="flex items-center justify-between bg-black/30 p-3 rounded-lg border border-white/5">
-                  <span className="font-mono text-white font-medium truncate pr-2">{method.value}</span>
-                  <button
-                    onClick={() => handleCopy(method.value, method.name)}
-                    className="flex-shrink-0 p-2 hover:bg-white/10 rounded-full transition-colors group-hover:text-gold"
-                    aria-label="Copiar"
-                  >
-                    {copiedId === method.name ? (
-                      <Check className="w-4 h-4 text-green-400" />
-                    ) : (
-                      <Copy className="w-4 h-4" />
-                    )}
-                  </button>
-                </div>
-              </div>
-            </motion.div>
-          ))}
-        </div>
+                  <div className="mt-4">
+                    <p className="text-sm text-gray-400 mb-1">Datos para transferir:</p>
+                    <div className="flex items-center justify-between bg-black/30 p-3 rounded-lg border border-white/5">
+                      <span className="font-mono text-white font-medium truncate pr-2">{method.valor}</span>
+                      <button
+                        onClick={() => handleCopy(method.valor, method.id)}
+                        className="flex-shrink-0 p-2 hover:bg-white/10 rounded-full transition-colors group-hover:text-gold"
+                        aria-label="Copiar"
+                      >
+                        {copiedId === method.id ? (
+                          <Check className="w-4 h-4 text-green-400" />
+                        ) : (
+                          <Copy className="w-4 h-4" />
+                        )}
+                      </button>
+                    </div>
+                  </div>
+                </motion.div>
+              );
+            })}
+          </div>
+        )}
 
-        {/* Nota al pie */}
         <motion.div
           initial={{ opacity: 0 }}
           whileInView={{ opacity: 1 }}

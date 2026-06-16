@@ -4,12 +4,13 @@ import { useState, useEffect } from 'react';
 import { useRouter } from 'next/navigation';
 import { motion, AnimatePresence } from 'framer-motion';
 import { Menu, X, Cross, Share2, Facebook, Instagram, Music2, LogIn } from 'lucide-react';
+import { useInvoke } from './InvokeProvider';
 
 const navLinks = [
   { href: '#inicio', label: 'Inicio' },
+  { href: '#reuniones', label: 'Reuniones' },
   { href: '#blog', label: 'Blog' },
-  { href: '#registro', label: 'Registro' },
-  { href: '#donaciones', label: 'Donaciones' },
+  { href: '#seccion-registro', label: 'Registro' },
 ];
 
 const socialLinks = [
@@ -18,11 +19,20 @@ const socialLinks = [
   { icon: Music2, url: process.env.NEXT_PUBLIC_TIKTOK_URL || '#', label: 'TikTok' },
 ];
 
+const casaItems = [
+  { href: '#nuestra-historia', label: 'Nuestra historia' },
+  { href: '#nuestra-identidad', label: 'Nuestra identidad' },
+  { href: '#nuestra-declaracion-de-fe', label: 'Nuestra declaración de fe' },
+  { href: '#nuestros-pastores', label: 'Nuestros pastores' },
+];
+
 export default function Header() {
   const router = useRouter();
+  const { invoke } = useInvoke();
   const [isScrolled, setIsScrolled] = useState(false);
   const [activeSection, setActiveSection] = useState('inicio');
   const [mobileOpen, setMobileOpen] = useState(false);
+  const [casaOpen, setCasaOpen] = useState(true); // TRUE for dev/maquetación
 
   useEffect(() => {
     const handleScroll = () => {
@@ -45,7 +55,7 @@ export default function Header() {
   const handleNavClick = (href: string) => {
     setMobileOpen(false);
     const id = href.replace('#', '');
-    document.getElementById(id)?.scrollIntoView({ behavior: 'smooth' });
+    invoke(id);
   };
 
   return (
@@ -108,6 +118,32 @@ export default function Header() {
                   </button>
                 );
               })}
+
+              {/* Nuestra casa dropdown */}
+              <div className="relative">
+                <button
+                  onClick={() => setCasaOpen(!casaOpen)}
+                  className="relative px-4 py-2 text-sm font-medium transition-colors duration-200 rounded-md text-[hsl(45,70%,80%)] hover:text-gold flex items-center gap-1"
+                >
+                  Nuestra casa
+                  <svg className={`w-3.5 h-3.5 transition-transform duration-200 ${casaOpen ? 'rotate-180' : ''}`} fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={2}>
+                    <path strokeLinecap="round" strokeLinejoin="round" d="M19 9l-7 7-7-7" />
+                  </svg>
+                </button>
+                {casaOpen && (
+                  <div className="absolute top-full left-0 mt-2 w-64 rounded-xl bg-white shadow-2xl shadow-black/30 border border-gray-200 py-2 z-50">
+                    {casaItems.map((item) => (
+                      <button
+                        key={item.href}
+                        onClick={() => { setCasaOpen(false); handleNavClick(item.href); }}
+                        className="block w-full text-left px-5 py-3 text-sm font-medium text-gray-700 hover:text-gold hover:bg-gray-50 transition-colors"
+                      >
+                        {item.label}
+                      </button>
+                    ))}
+                  </div>
+                )}
+              </div>
             </nav>
 
             {/* Desktop: Social Icons + CTA */}

@@ -2,7 +2,7 @@
 
 import { useEffect, useState } from 'react'
 import Link from 'next/link'
-import { CalendarCheck, Users, MessageSquare, FileText, Bell, ArrowRight, Database, LogOut } from 'lucide-react'
+import { CalendarCheck, Users, MessageSquare, FileText, Bell, Image, DollarSign, Calendar, ArrowRight, Database, LogOut } from 'lucide-react'
 import { useRouter } from 'next/navigation'
 
 const tables = [
@@ -11,6 +11,9 @@ const tables = [
   { slug: 'comunicaciones', label: 'Comunicaciones', desc: 'Mensajes enviados a miembros', icon: MessageSquare },
   { slug: 'blog-posts', label: 'Blog Posts', desc: 'Artículos y publicaciones del blog', icon: FileText },
   { slug: 'notificaciones', label: 'Notificaciones', desc: 'Alertas y avisos del sistema', icon: Bell },
+  { slug: 'carousel', label: 'Carrusel', desc: 'Slides del hero principal', icon: Image },
+  { slug: 'donaciones', label: 'Donaciones', desc: 'Métodos de donación y ofrendas', icon: DollarSign },
+  { slug: 'eventos', label: 'Eventos', desc: 'Noticias, eventos y campañas', icon: Calendar },
 ]
 
 export default function ConsultaPage() {
